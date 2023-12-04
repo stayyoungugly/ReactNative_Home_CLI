@@ -4,7 +4,7 @@ import {Button, Linking} from "react-native";
 import {Icon} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeScreen from "./screens/HomeScreen";
+import {HomeScreen} from "./screens/HomeScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ChatScreen from "./screens/ChatScreen";
 import NewsScreen from "./screens/NewsScreen";
@@ -16,6 +16,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import {DeepLinking} from "./navigation/DeepLinking";
 import Navigation from "./navigation/Navigation";
+import {useTranslation} from "react-i18next";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const newsScreenTitle = 'News'
 const chatScreenTitle = 'Chat'
 const settingsScreenTitle = 'Settings'
 const TabNavigation = () => {
+    const {t} = useTranslation()
     return (
         <Tab.Navigator
             initialRouteName={homeScreenTitle}
@@ -54,14 +56,19 @@ const TabNavigation = () => {
                 }
             })}
         >
-            <Tab.Screen name="Home" component={HomeStack} options={{headerShown: false}}/>
-            <Tab.Screen name="News" component={NewsScreen}/>
-            <Tab.Screen name="Chat" component={ChatScreen}/>
-            <Tab.Screen name="Settings" component={SettingsScreen}/>
+            <Tab.Screen name="Home" component={HomeStack}
+                        options={{headerShown: false, tabBarLabel: t('main.tabs.home.title')}}/>
+            <Tab.Screen name="News" component={NewsScreen}
+                        options={{tabBarLabel: t('main.tabs.news'), headerTitle: t('main.tabs.news')}}/>
+            <Tab.Screen name="Chat" component={ChatScreen}
+                        options={{tabBarLabel: t('main.tabs.chat'), headerTitle: t('main.tabs.chat')}}/>
+            <Tab.Screen name="Settings" component={SettingsScreen}
+                        options={{tabBarLabel: t('main.tabs.settings'), headerTitle: t('main.tabs.settings')}}/>
         </Tab.Navigator>
     );
 }
 const HomeStack = () => {
+    const {t} = useTranslation()
     return (
         <Stack.Navigator>
             <Stack.Screen name={'HomeScreen'}
@@ -73,13 +80,14 @@ const HomeStack = () => {
                               headerRight: () => (
                                   <Button
                                       onPress={() => props.navigation.navigate('About')}
-                                      title="About (App)"
+                                      title={t('main.tabs.home.button')}
                                       color="#000"
                                   />
                               )
                           })}
             />
-            <Stack.Screen name={'About'} component={AboutScreen} initialParams={{itemId: 42}}/>
+            <Stack.Screen name={'About'} component={AboutScreen} initialParams={{itemId: 42}}
+                          options={{headerTitle: t('main.tabs.about')}}/>
         </Stack.Navigator>
     );
 }

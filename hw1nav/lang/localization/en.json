@@ -1,0 +1,24 @@
+{
+  "main": {
+    "tabs": {
+      "home": {
+        "title": "Home",
+        "button": "About (App)"
+      },
+      "chat": "Chat",
+      "news": "News",
+      "settings": "Settings",
+      "about": "About"
+    },
+    "screens": {
+      "home": {
+        "title": "Home Screen",
+        "button": "Change language"
+      },
+      "chat": "Chat Screen",
+      "news": "News Screen",
+      "settings": "Settings Screen",
+      "about": "About Our App: Nothing"
+    }
+  }
+}
