@@ -13,7 +13,8 @@
     "screens": {
       "home": {
         "title": "Home Screen",
-        "button": "Change language"
+        "buttonLanguage": "Change language",
+        "buttonTheme": "Change theme"
       },
       "chat": "Chat Screen",
       "news": "News Screen",

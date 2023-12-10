@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import {Button, Linking} from "react-native";
+import {Button, Linking, StyleSheet} from "react-native";
 import {Icon} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -17,6 +17,9 @@ import {NavigationContainer} from "@react-navigation/native";
 import {DeepLinking} from "./navigation/DeepLinking";
 import Navigation from "./navigation/Navigation";
 import {useTranslation} from "react-i18next";
+import {ThemeProviders} from "./modules/theme/ThemeProvider";
+import IColors from "./modules/theme/IColors";
+import {useTheme} from "./modules/theme/hooks/useTheme";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -26,6 +29,8 @@ const newsScreenTitle = 'News'
 const chatScreenTitle = 'Chat'
 const settingsScreenTitle = 'Settings'
 const TabNavigation = () => {
+    const {Colors} = useTheme();
+    const colors = Colors
     const {t} = useTranslation()
     return (
         <Tab.Navigator
@@ -46,20 +51,30 @@ const TabNavigation = () => {
 
                     return <Ionicons name={iconName} size={size} color={color}/>
                 },
-                tabBarActiveTintColor: 'cornflowerblue',
-                tabBarInactiveTintColor: 'lightgrey',
+                tabBarActiveTintColor: colors.accentPrimary,
+                tabBarInactiveTintColor: colors.accentSecondary,
+                headerStyle: {backgroundColor: colors.overlay},
+                headerTitleStyle: {
+                    color: colors.textPrimary
+                },
+                headerShadowVisible: false,
                 tabBarStyle: {
-                    backgroundColor: "white",
+                    backgroundColor: colors.overlay,
                     height: 60,
                     paddingBottom: 10,
                     paddingTop: 10,
+                    elevation: 0,
+                    borderTopWidth: 0
                 }
             })}
         >
             <Tab.Screen name="Home" component={HomeStack}
                         options={{headerShown: false, tabBarLabel: t('main.tabs.home.title')}}/>
             <Tab.Screen name="News" component={NewsScreen}
-                        options={{tabBarLabel: t('main.tabs.news'), headerTitle: t('main.tabs.news')}}/>
+                        options={{
+                            tabBarLabel: t('main.tabs.news'),
+                            headerTitle: t('main.tabs.news')
+                        }}/>
             <Tab.Screen name="Chat" component={ChatScreen}
                         options={{tabBarLabel: t('main.tabs.chat'), headerTitle: t('main.tabs.chat')}}/>
             <Tab.Screen name="Settings" component={SettingsScreen}
@@ -68,6 +83,8 @@ const TabNavigation = () => {
     );
 }
 const HomeStack = () => {
+    const {Colors} = useTheme();
+    const colors = Colors
     const {t} = useTranslation()
     return (
         <Stack.Navigator>
@@ -75,37 +92,50 @@ const HomeStack = () => {
                           component={HomeScreen}
                           options={(props) => ({
                               headerTitleAlign: 'center',
+                              headerStyle: {backgroundColor: colors.overlay},
+                              headerShadowVisible: false,
                               headerTitle: () =>
-                                  <Icon type="ionicon" name="logo-flickr"/>,
+                                  <Icon type="ionicon" name="logo-flickr" color={colors.accentPrimary}/>,
                               headerRight: () => (
                                   <Button
                                       onPress={() => props.navigation.navigate('About')}
                                       title={t('main.tabs.home.button')}
-                                      color="#000"
+                                      color={colors.buttonTertiary}
                                   />
                               )
                           })}
             />
             <Stack.Screen name={'About'} component={AboutScreen} initialParams={{itemId: 42}}
-                          options={{headerTitle: t('main.tabs.about')}}/>
+                          options={{
+                              headerTitle: t('main.tabs.about'),
+                              headerStyle: {backgroundColor: colors.overlay},
+                              headerShadowVisible: false,
+                              headerTitleStyle: {
+                                  color: colors.textPrimary
+                              },
+                              headerTintColor: colors.textPrimary
+                          }}/>
         </Stack.Navigator>
     );
 }
 export default function App() {
     useEffect(() => {
-        Linking.getInitialURL().then(async (deepLinkInitialURL: any) => {
+        Linking.getInitialURL().then(async (deepLinkInitialURL) => {
             if (deepLinkInitialURL) {
                 await DeepLinking.handleInitialNavigate(deepLinkInitialURL);
             }
         });
     }, []);
     return (
-        <NavigationContainer
-            linking={DeepLinking.linking}
-            ref={Navigation.navigationRef}>
-            <Stack.Navigator>
-                <Stack.Screen name={'Tab'} component={TabNavigation} options={{headerShown: false}}/>
-            </Stack.Navigator>
-        </NavigationContainer>
+        <ThemeProviders>
+            <NavigationContainer
+                linking={DeepLinking.linking}
+                ref={Navigation.navigationRef}>
+                <Stack.Navigator>
+                    <Stack.Screen name={'Tab'} component={TabNavigation}
+                                  options={{headerShown: false}}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        </ThemeProviders>
     );
 }

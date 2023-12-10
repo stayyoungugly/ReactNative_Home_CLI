@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {LangStore} from "../lang/stores/LangStore";
+import {LangStore} from "../modules/lang/stores/LangStore";
 
 class RootStore {
     langStore
