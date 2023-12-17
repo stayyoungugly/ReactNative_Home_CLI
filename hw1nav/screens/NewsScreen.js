@@ -37,5 +37,6 @@ const useStyles = (colors) => StyleSheet.create({
         color: colors.textPrimary,
         fontSize:
             20,
+        fontFamily: "Gilroy-Black"
     }
 });

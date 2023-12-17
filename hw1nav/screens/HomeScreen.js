@@ -96,13 +96,15 @@ const useStyles = (colors) => StyleSheet.create({
         color: colors.textPrimary,
         fontSize:
             20,
+        fontFamily: "Gilroy-Black",
     }
     ,
     appButtonText: {
         color: colors.textSecondary,
         fontSize:
             16,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: "Gilroy-Medium"
     },
     loader: {
         flex: 1,

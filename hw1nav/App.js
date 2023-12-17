@@ -55,7 +55,8 @@ const TabNavigation = () => {
                 tabBarInactiveTintColor: colors.accentSecondary,
                 headerStyle: {backgroundColor: colors.overlay},
                 headerTitleStyle: {
-                    color: colors.textPrimary
+                    color: colors.textPrimary,
+                    fontFamily: "Gilroy-Medium"
                 },
                 headerShadowVisible: false,
                 tabBarStyle: {
@@ -65,7 +66,8 @@ const TabNavigation = () => {
                     paddingTop: 10,
                     elevation: 0,
                     borderTopWidth: 0
-                }
+                },
+                tabBarLabelStyle: {fontFamily: "Gilroy-Medium"}
             })}
         >
             <Tab.Screen name="Home" component={HomeStack}
@@ -73,7 +75,7 @@ const TabNavigation = () => {
             <Tab.Screen name="News" component={NewsScreen}
                         options={{
                             tabBarLabel: t('main.tabs.news'),
-                            headerTitle: t('main.tabs.news')
+                            headerTitle: t('main.tabs.news'),
                         }}/>
             <Tab.Screen name="Chat" component={ChatScreen}
                         options={{tabBarLabel: t('main.tabs.chat'), headerTitle: t('main.tabs.chat')}}/>
@@ -111,7 +113,8 @@ const HomeStack = () => {
                               headerStyle: {backgroundColor: colors.overlay},
                               headerShadowVisible: false,
                               headerTitleStyle: {
-                                  color: colors.textPrimary
+                                  color: colors.textPrimary,
+                                  fontFamily: "Gilroy-Medium"
                               },
                               headerTintColor: colors.textPrimary
                           }}/>
